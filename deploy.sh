@@ -16,7 +16,7 @@ docker container run \
   -d \
   postgres:17
   
-  docker container run --mount type=volume,source=expense-tracker-db-vol,target=/var/lib/postgresql/data -v "$(pwd)/db":/docker-entrypoint-initdb.d:ro -e POSTGRES_PASSWORD=top-secret -e POSTGRES_DB=expense_tracker -e POSTGRES_USER=expense_tracker --name expense-db --network expense-tracker -d postgres:17
+  docker run --mount type=volume,source=expense-tracker-db-vol,target=/var/lib/postgresql/data -v "$(pwd)/db:/docker-entrypoint-initdb.d:ro" -e POSTGRES_PASSWORD=top-secret -e POSTGRES_DB=expense_tracker -e POSTGRES_USER=expense_tracker --name expense-db --network expense-tracker -d postgres:17
 
 # Build the backend image from the ./backend directory
 docker build -t expense-backend ./backend
@@ -29,7 +29,10 @@ docker container run \
   -e DATABASE_HOST=expense-db \
   -d \
   expense-backend
-#docker container run --name expense-backend-container --network expense-tracker -p 8080:5001 -e DATABASE_HOST=expense-db -d expense-backend
+
+  #docker container run --name expense-backend-container --network expense-tracker -p 8080:5001 -e DATABASE_HOST=expense-db -d expense-backend
+docker container run --name expense-backend-container --network expense-tracker -p 8080:5001 -e DATABASE_HOST=expense-db -d expense-backend
+
 # Build the frontend image from the ./frontend directory, injecting the API base URL
 docker build -t expense-frontend \
   --build-arg VITE_API_BASE_URL=http://localhost:8080/api \
