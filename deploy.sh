@@ -5,7 +5,7 @@ docker network create expense-tracker
 
 # Start a PostgreSQL container with a named volume for persistent data
 # Mount initialization SQL scripts from ./db (read-only)
-docker container run \
+docker run \
   --mount type=volume,source=expense-tracker-db-vol,target=/var/lib/postgresql/data \
   -v "$(pwd)/db":/docker-entrypoint-initdb.d:ro \
   -e POSTGRES_PASSWORD=top-secret \
@@ -18,7 +18,7 @@ docker container run \
   
   docker run --mount type=volume,source=expense-tracker-db-vol,target=/var/lib/postgresql/data -v "$(pwd)/db:/docker-entrypoint-initdb.d:ro" -e POSTGRES_PASSWORD=top-secret -e POSTGRES_DB=expense_tracker -e POSTGRES_USER=expense_tracker --name expense-db --network expense-tracker -d postgres:17
 
-# Build the backend image from the ./backend directory
+# Build the backend image from the ./backend directory                                                  -v "$(pwd)/db:/docker-entrypoint-initdb.d:ro"
 docker build -t expense-backend ./backend
 
 # Run the FastAPI backend container, connecting to the same network and exposing port 5001
@@ -48,9 +48,29 @@ docker container run \
   expense-frontend
 
  # docker container run --name expense-frontend-container --network expense-tracker -p 8081:80 -d expense-frontend 
+=======================
+# #This PowerShell command reads your original SQL file and creates a new version encoded as UTF-8.
+# Get-Content .\db\init.sql | Set-Content -Encoding UTF8 .\db\init-fixed.sql
 
+# After this:
 
- ====================
+# init-fixed.sql is UTF-8 encoded ✅
+
+# You can safely rename it back to init.sql:
+
+# Move-Item -Force .\db\init-fixed.sql .\db\init.sql
+# Use full:
+# 🧩 Step-by-step:
+
+# Get-Content .\db\init.sql
+# → Reads the contents of the file init.sql (in your db folder).
+
+# | (the pipe)
+# → Sends that content to the next command in the pipeline.
+
+# Set-Content -Encoding UTF8 .\db\init-fixed.sql
+# → Writes the content into a new file called init-fixed.sql, and forces the encoding to UTF-8.
+ #====================
  On Windows PowerShell:
  #to activate in window powershell
  .\env\Scripts\Activate   
