@@ -47,4 +47,55 @@ docker container run \
   -d \
   expense-frontend
 
- # docker container run --name expense-frontend-container --network expense-tracker -p 8081:80 -d expense-frontend
+ # docker container run --name expense-frontend-container --network expense-tracker -p 8081:80 -d expense-frontend 
+
+
+ ====================
+ On Windows PowerShell:
+ #to activate in window powershell
+ .\env\Scripts\Activate   
+ #activate  On Linux/macOS:
+ source venv/bin/activate
+
+#Create virtual environment
+ python -m venv venv
+
+#Install dependencies:
+ pip install -r requirements.txt   or pip install -r backend\requirements.txt
+
+ #to creat table in db:
+  docker exec -it expense-db bash
+
+  #psql -U auth_user -d your_db
+
+   psql -U  expense_tracker -d expense-db
+
+   #Connect to your new database
+   \c "expense-db" expense_tracker
+
+  # Create tables (example schema)
+  -- Users table
+CREATE TABLE users (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(50) UNIQUE NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+ Expenses table
+CREATE TABLE expenses (
+    id SERIAL PRIMARY KEY,
+    user_id INT REFERENCES users(id),
+    title VARCHAR(255) NOT NULL,
+    amount NUMERIC(10,2) NOT NULL,
+    category VARCHAR(100),
+    expense_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+#Verify tables:
+  \dt
+
+
+
+
