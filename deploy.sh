@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Create a dedicated Docker network for all expense-tracker components
+# To Create a dedicated Docker network for all expense-tracker components
 docker network create expense-tracker
 
 # Start a PostgreSQL container with a named volume for persistent data
