@@ -32,7 +32,6 @@ docker network create expense-tracker
 Create a PostgreSQL container with persistent storage and an initialization SQL script.
 
 bash
-Copy code
 docker run \
   --mount type=volume,source=expense-tracker-db-vol,target=/var/lib/postgresql/data \
   -v "$(pwd)/db":/docker-entrypoint-initdb.d:ro \
@@ -57,12 +56,10 @@ Container name: expense-db
 Build the backend Docker image from the ./backend directory:
 
 bash
-Copy code
 docker build -t expense-backend ./backend
 Run the backend container on port 8080, connected to the same network:
 
 bash
-Copy code
 docker container run \
   --name expense-backend-container \
   --network expense-tracker \
@@ -80,14 +77,12 @@ DATABASE_HOST=expense-db — Connects backend to the running PostgreSQL containe
 Build the frontend image with the API base URL passed as a build argument:
 
 bash
-Copy code
 docker build -t expense-frontend \
   --build-arg VITE_API_BASE_URL=http://localhost:8080/api \
   ./frontend
 Run the frontend container on port 8081:
 
 bash
-Copy code
 docker container run \
   --name expense-frontend-container \
   --network expense-tracker \
