@@ -12,7 +12,7 @@ backend (FastAPI)
 ↓
 database (PostgreSQL)
 
-### 1️⃣ Create a Dedicated Docker Network ###
+### 1️⃣ Create a Dedicated Docker Network 
         docker network create expense-tracker
 
 ### 2️⃣ Create a PostgreSQL container with persistent     storage and an initialization SQL script ##
@@ -42,7 +42,7 @@ database (PostgreSQL)
         -d \
          expense-backend*
   
-### 4️⃣ Build and Run the Frontend ###
+### 4️⃣ Build and Run the Frontend 
 ### Build the frontend image with the API base URL passed as a build argument:###
 
       docker build -t expense-frontend \
@@ -51,10 +51,10 @@ database (PostgreSQL)
 
 ### Run the frontend container on port 8081:###
 
-   docker container run \
-      --name expense-frontend-container \
-      --network expense-tracker \
-      -p 8081:80 \
-      -d \
-       expense-frontend*
+      docker container run \
+        --name expense-frontend-container \
+        --network expense-tracker \
+        -p 8081:80 \
+        -d \
+        expense-frontend
   
