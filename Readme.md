@@ -6,7 +6,7 @@ It includes a **PostgreSQL database**, a **FastAPI backend**, and a **frontend w
 
 ## Project Architecture
 
-frontend (React/Vite)
+frontend (React/nginx)
 ↓
 backend (FastAPI)
 ↓
