@@ -51,10 +51,10 @@ database (PostgreSQL)
 
 ### Run the frontend container on port 8081:###
 
-   docker container run \
+    docker container run \
       --name expense-frontend-container \
       --network expense-tracker \
       -p 8081:80 \
       -d \
-       expense-frontend*
+      expense-frontend
   
